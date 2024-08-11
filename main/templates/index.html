@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Jupyter Notebook</title>
+</head>
+<body>
+    <h1>Upload Jupyter Notebook</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="notebook_file" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

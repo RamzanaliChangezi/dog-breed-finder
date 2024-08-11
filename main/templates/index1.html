@@ -1,0 +1,443 @@
+{% extends 'base/main-layout.html' %}
+{% load static %}
+
+
+
+{% block title %} Dog Breed Finder{% endblock title %}
+
+
+{% block head %}
+
+
+
+
+<style type="text/css">
+
+.line-left{
+    border-left: 3px solid #fff;
+}
+.line-left-bold{
+    border-left: 3px solid #fff;
+}
+.line-dark-bottom{
+    border-bottom: 3px solid var(--dark);
+}
+
+.line-left-dark{
+    border-left: 1.5px solid #111;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+.form-container {
+
+  display: flex;
+    justify-content: center;
+  align-items: center;
+}
+.upload-files-container {
+    /* background-color: #f7fff7; */
+    width: 100%;
+    padding: 30px 60px;
+    /* border-radius: ; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  
+}
+.drag-file-area {
+    cursor: pointer;
+
+  border: 2px dashed var(--dark);
+  border-radius: 1rem;
+  margin: 10px 0 15px;
+  padding: 120px 50px;
+  width: 100%;
+  text-align: center;
+}
+.drag-file-area:hover{
+    background-color: #e4e4e4;
+}
+
+
+.drag-file-area .upload-icon {
+  font-size: 50px;
+}
+.drag-file-area h3 {
+  font-size: 26px;
+  margin: 15px 0;
+}
+.drag-file-area label {
+  font-size: 19px;
+}
+.drag-file-area label .browse-files-text {
+  color: #7b2cbf;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.browse-files span {
+  position: relative;
+  top: -25px;
+}
+.default-file-input {
+  opacity: 0;
+  width: 0;
+}
+.cannot-upload-message {
+  background-color: #ffc6c4;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  padding: 5px 10px 5px 30px;
+  border-radius: 5px;
+  color: #BB0000;
+  display: none;
+}
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+.cannot-upload-message span, .upload-button-icon {
+  padding-right: 10px;
+}
+.cannot-upload-message span:last-child {
+  padding-left: 20px;
+  cursor: pointer;
+}
+.file-block {
+  color: #f7fff7;
+  background-color: #7b2cbf;
+    transition: all 1s;
+  width: 390px;
+  position: relative;
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 15px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.file-info {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+.file-icon {
+  margin-right: 10px;
+}
+.file-name, .file-size {
+  padding: 0 3px;
+}
+.remove-file-icon {
+  cursor: pointer;
+}
+.progress-bar {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 4.5%;
+  width: 0;
+  height: 5px;
+  border-radius: 25px;
+  background-color: #4BB543;
+}
+
+
+
+
+
+
+
+
+.upload-image-button{
+    
+  border: 1px solid white;
+  border-radius: 90rem;
+  margin: 10px 0 15px;
+  padding: 0.9rem 1.8rem;
+  width: 100%;
+  text-align: center;
+}
+.border-light-right{
+    border-right: 1px solid #fff;
+}
+.bg-item-img{
+    background-size: cover;
+    background-position: center;
+    height: 270px;
+    width: 100%;
+}
+
+
+
+</style>
+<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+{% endblock head %}
+
+
+
+
+
+
+
+
+
+{% block body %}
+
+
+
+
+
+<section>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+    
+        
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }} " class="{{ cta.isActive }}" aria-current="true" aria-label="Slide 1">
+          </button>
+         
+    
+        
+    
+      </div>
+      <div class="carousel-inner overflow-hidden">
+    
+          
+        <div 
+          class="carousel-item carousel-item-cta  active" 
+          style="background-image: url({% static 'img/dog-background.jpg' %})">
+          <div class="cta-size d-flex align-items-center " style="background-color: rgba(0, 0, 0, 0.7) ">
+            
+            <div class="wrapper w-100 ">
+              <div class="row mx-0 wall line-left ">
+                <!-- <div class="col-lg-1  h-100"></div> -->
+                <div class="col-lg-6 ps-5 link-rm">
+                    <h1  class="text-white display-4 font-weight-500 ">
+                        Meet <span class="text-yellow">Dooby! </span>
+                    </h1>
+
+                    <p class="fs-5 text-white py-2 mb-4">
+                        Your friendly dog breed identifier.
+                    </p>
+
+                    <a href="{% url 'results' %}" class="gbtn gbtn-yellow fs-6" style="border-radius: 100px; ">
+                        Show Results 
+                        <i class="fa-solid fa-chevron-right ps-2"></i>
+                    </a>
+                  
+                </div>
+                <div class="col-lg-2"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+    
+    
+    
+    
+    
+      </div>
+    
+    
+
+    
+    
+    </div>
+    </section> 
+
+<section class="bg-theme-dark">
+<div class="wrapper">
+<div class="wall">
+    <div class="py-5 row">
+        <div class="col-lg-3 line-left col-md-4">
+
+            <h3 class="display-1  text-white mt-5  ps-3 ">
+                <div class="line-leftxs "></div>
+                ABOUT
+            </h3>
+        </div>
+        <div class="col-lg-9 col-md-8 py-3 px-3 mt-5">
+            <p class="text-white fs-5">
+                Meet Dooby, an advanced deep learning model designed to accurately identify dog breeds from images. Perfect for dog enthusiasts, breeders, and pet owners.
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+<br>
+<!-- <section class="wrapper my-5">
+<div class="wall">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="{% static 'img/dog-item-1.jpg' %}" class="w-100 " alt="">
+        </div>
+
+        <div class="col-lg-6 px-0  d-flex align-items-center">
+            <div class="bg-theme-dark px-4 py-5 line-left-bold position-left-over shadow">
+                <h3 class="text-white font-weight-400 display-4">HOW IT WORKS?</h3>
+                <p class="fs-5 text-white"> 
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam labore aliquam repellendus ut nisi 
+                    vero expedita ipsam, quibusdam enim autem obcaecati magnam voluptatem minus molestiae explicabo 
+                    laudantium unde, veniam tenetur.
+                </p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</section> -->
+
+
+
+<section class=" overflow-hidden my-3 ">
+<div class="wrapper ">
+    <div class="wall overflow-hidden bg-theme-darxk bg-rounded px-3 py-3">
+        <h3 class=" font-weight-400 display-4 line-dark-bottom col-lg-6">DOG BREEDS</h3>
+        <div class="row py-3">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-1.jpg' %});"></div>
+                <h5 class="text-center pt-2 ">Bulldog</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-6.jpg' %});"></div>
+                <h5 class="text-center pt-2">Great Dane</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-7.jpg' %});"></div>
+                <h5 class="text-center pt-2">Welsh Corgi</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-4.jpg' %});"></div>
+                <h5 class="text-center pt-2 ">Shetland Sheepdog</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-5.jpg' %});"></div>
+                <h5 class="text-center pt-2">English Foxhound</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-6.jpg' %});"></div>
+                <h5 class="text-center pt-2">Bulldog</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-7.jpg' %});"></div>
+                <h5 class="text-center pt-2 ">Shiba Inu</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-2.jpg' %});"></div>
+                <h5 class="text-center pt-2">Golden Retriever</h5>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                <div class="bg-item-img" style="background-image: url({% static 'img/dog-item-3.jpg' %});"></div>
+                <h5 class="text-center pt-2">Bulldog</h5>
+            </div> 
+        </div>
+    </div>
+</div>
+</section> 
+  
+
+
+
+
+
+
+
+<section class="wrapper">
+<div class="wall">
+    <div class="row">
+        <div class="col-md-6 d-flex align-items-center">
+            <div>
+                <h3 class=" font-weight-400 display-4 line-dark-bottom col-lg-6">Graph</h3>
+                <p class="fs-5">
+                    This graph represents the total number of dog breeds. On the x-axis, we have labels. 
+                    Similarly, On the y-axis, we have the number of dog images corresponding to that dog breed.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'img/results-graph.jpg' %}" class="w-100" alt="">
+        </div>
+   </div>
+</div>
+</section>
+
+
+<section class="wrapper">
+<div class="wall">
+    <div class="row">
+        <div class="col-md-6 d-flex align-items-center">
+            <div>
+                <h3 class=" font-weight-400 display-4 line-dark-bottom col-lg-6">Graph 2</h3>
+                <p class="fs-5">
+                    This graph represents the initial prediction, indicating that the given dog image belongs to "whippet".
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'img/results-graph-1.jpg' %}" class="w-100" alt="">
+        </div>
+    </div>
+</div>
+</section>
+    
+
+
+
+
+<br><br><br><br><br>
+
+
+
+
+
+
+{% endblock body %}
+
+
+{% block script %}
+
+
+<script>
+
+
+</script>
+{% endblock script %}
